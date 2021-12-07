@@ -40,7 +40,7 @@ jobs:
       - name: Get current qa latest
         run: echo Pulling latest image
       - name: Get tag from github ref
-        run: echo "THE_VERSION_TAG=${GITHUB_REF#refs/*/" >> $GITHUB_ENV
+        run: echo "THE_VERSION_TAG=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
       - name: Tag current qa latest with tag
         run: echo Tagging latest qa image with ${{ env.THE_VERSION_TAG }}
 
