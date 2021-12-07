@@ -1,0 +1,17 @@
+name: Deploy to ECS
+inputs:
+  cluster:
+    description: Name of the ECS cluster to deploy to
+    required: true
+    default: qa
+  version:
+    description: Version of image to deploy
+    required: false
+    default: latest
+description: Action to deploy to ecs
+runs:
+  using: composite
+  steps:
+    - run: |
+        echo Deploying github_env to ${{ inputs.cluster }} with version: ${{ inputs.version }}
+      shell: bash

@@ -10,8 +10,10 @@ jobs:
    runs-on: ubuntu-latest
    environment: qa
    steps:
+     - name: Checkout repository
+       uses: actions/checkout@v2
      - name: Deploy to qa ECS
-       run: |
-         echo "Running docker container to deploy to ECS qa..."
-         sleep 3
-         echo "Deployed qa!!"
+       uses: ./.github/actions/deploy-to-ecs
+       with:
+         cluster: qa
+         version: v1.2.3
