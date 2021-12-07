@@ -24,10 +24,14 @@ jobs:
           images: furman9596/github_env
       - name: See tags and labels
         run: |
-          echo "${{ steps.meta.outputs.version }}"
-          echo "${{ steps.meta.outputs.tags }}"
-          echo "${{ steps.meta.outputs.labels }}"
-          echo "${{ steps.meta.outputs.json }}"
+          echo "version: ${{ steps.meta.outputs.version }}"
+          echo "---------------"
+          echo "tags: ${{ steps.meta.outputs.tags }}"
+          echo "---------------"
+          echo "labels: ${{ steps.meta.outputs.labels }}"
+          echo "---------------"
+          echo "json: ${{ steps.meta.outputs.json }}"
+          echo "---------------"
           cat ${{ steps.meta.outputs.bake-file }}
   deploy-qa:
     if: contains(github.ref,'qa')
