@@ -17,3 +17,5 @@ jobs:
        with:
          cluster: qa
          version: v1.2.3
+         aws-access-key: test-access-key-bruh
+         aws-secret-access-key: test-secret-access-key-bruh

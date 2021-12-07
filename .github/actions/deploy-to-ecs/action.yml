@@ -1,5 +1,11 @@
 name: Deploy to ECS
 inputs:
+  aws-access-key:
+    description: aws access key
+    required: true
+  aws-secret-access-key:
+    description: aws secret access key
+    required: true
   cluster:
     description: Name of the ECS cluster to deploy to
     required: true
@@ -14,4 +20,5 @@ runs:
   steps:
     - run: |
         echo Deploying github_env to ${{ inputs.cluster }} with version: ${{ inputs.version }}
+        echo AWS acess key: ${{ inputs.aws-access-key }} - secret key: ${{ inputs.aws-secret-access-key }}
       shell: bash
