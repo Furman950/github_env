@@ -1,0 +1,28 @@
+name: Deploy github_env app
+
+on:
+  push:
+    branches:
+      - qa
+
+jobs:
+  deploy-qa:
+   runs-on: ubuntu-latest
+   environment: qa
+   steps:
+     - name: Deploy to qa ECS
+       run: |
+         echo "Running docker container to deploy to ECS qa..."
+         sleep 3
+         echo "Deployed qa!!"
+  deploy-prod:
+    runs-on: ubuntu-latest
+    environment: prod
+    steps:
+      - name: Deploy to prod ECS
+        run: |
+          echo "Running docker container to deploy to ECS prod..."
+          sleep 3
+          echo "Deployed prod!!"
+
+
