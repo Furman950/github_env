@@ -24,7 +24,11 @@ jobs:
           images: furman9596/github_env
       - name: See tags and labels
         run: |
-          echo ${{ steps.meta.outputs }}
+          echo ${{ steps.meta.outputs.version }}
+          echo ${{ steps.meta.outputs.tags }}
+          echo ${{ steps.meta.outputs.labels }}
+          echo ${{ steps.meta.outputs.json }}
+          cat ${{ steps.meta.outputs.bake-file
   deploy-qa:
     if: contains(github.ref,'qa')
     runs-on: ubuntu-latest
