@@ -10,7 +10,7 @@ on:
 jobs:
   build-and-publish:
     runs-on: ubuntu-latest
-    if: ${{ github.ref ~= 'qa' }}
+    if: contains(github.ref, 'qa')
     steps:
       - name: Build image
         run: |
@@ -19,7 +19,7 @@ jobs:
         run: |
           echo Publishing iamge
   deploy-qa:
-    if: ${{ github.ref ~= 'qa' }}
+    if: contains(github.ref,'qa')
     runs-on: ubuntu-latest
     environment: qa
     needs: [ build-and-publish ]
@@ -35,7 +35,7 @@ jobs:
          aws-secret-access-key: ${{ secrets.TEST_SECRET_ACCESS_KEY }}
   tag-latest-with-version:
     runs-on: ubuntu-latest
-    if: ${{ github.ref ~= 'tag' }}
+    if: contains(github.ref, 'tag')
     steps:
       - name: Get current qa latest
         run: echo Pulling latest image
