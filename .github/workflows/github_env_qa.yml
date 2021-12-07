@@ -28,7 +28,7 @@ jobs:
           echo ${{ steps.meta.outputs.tags }}
           echo ${{ steps.meta.outputs.labels }}
           echo ${{ steps.meta.outputs.json }}
-          cat ${{ steps.meta.outputs.bake-file
+          cat ${{ steps.meta.outputs.bake-file }}
   deploy-qa:
     if: contains(github.ref,'qa')
     runs-on: ubuntu-latest
