@@ -12,12 +12,19 @@ jobs:
     runs-on: ubuntu-latest
     if: contains(github.ref, 'qa')
     steps:
-      - name: Build image
+      - name: Log in to Docker Hub
+        uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v3
+        with:
+          images: furman9596/github_env
+      - name: See tags and labels
         run: |
-          echo Building image
-      - name: Publish image
-        run: |
-          echo Publishing iamge
+          echo ${{ steps.meta.outputs }}
   deploy-qa:
     if: contains(github.ref,'qa')
     runs-on: ubuntu-latest
