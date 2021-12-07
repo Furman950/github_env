@@ -4,14 +4,29 @@ on:
   push:
     branches:
       - qa
+    tags:
+      - '*'
 
 jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    if: ${{ github.ref =~ 'qa'}}
+    steps:
+      - name: Build image
+        run: |
+          echo Building image
+      - name: Publish image
+        run: |
+          echo Publishing iamge
   deploy-qa:
-   runs-on: ubuntu-latest
-   environment: qa
-   steps:
+    if: ${{ github.ref =~ 'qa'}}
+    runs-on: ubuntu-latest
+    environment: qa
+    needs: [ build-and-publish ]
+    steps:
      - name: Checkout repository
        uses: actions/checkout@v2
+     - name:
      - name: Deploy to qa ECS
        uses: ./.github/actions/deploy-to-ecs
        with:
@@ -19,3 +34,15 @@ jobs:
          version: v1.2.3
          aws-access-key: ${{ secrets.TEST_KEY }}
          aws-secret-access-key: ${{ secrets.TEST_SECRET_ACCESS_KEY }}
+  tag-latest-with-version:
+    runs-on: ubuntu-latest
+    if: ${{ github.ref =~ 'tag' }}
+    steps:
+      - name: Get current qa latest
+        run: echo Pulling latest image
+      - name: Get tag from github ref
+        run: echo "THE_VERSION_TAG=${GITHUB_REF#refs/*/" >> $GITHUB_ENV
+      - name: Tag current qa latest with tag
+        run: echo Tagging latest qa image with ${{ env.THE_VERSION_TAG }}
+
+
