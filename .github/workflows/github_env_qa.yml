@@ -26,7 +26,6 @@ jobs:
     steps:
      - name: Checkout repository
        uses: actions/checkout@v2
-     - name:
      - name: Deploy to qa ECS
        uses: ./.github/actions/deploy-to-ecs
        with:
