@@ -27,7 +27,7 @@ jobs:
       - name: Cat image-tag.txt
         run: cat ./image-tag.txt
       - name: Cache qa tag
-        uses: actions/cach@v2
+        uses: actions/cache@v2
         with:
           key: image-tag
           path: |
