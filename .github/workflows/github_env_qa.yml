@@ -13,30 +13,16 @@ jobs:
     runs-on: ubuntu-latest
     if: contains(github.ref, 'qa')
     steps:
-      - name: Docker test
-        run: |
-          docker images
       - name: Log in to Docker Hub
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta
-        uses: docker/metadata-action@v3
+      - name: Build image
+        uses: docker/build-push-action@v2
         with:
-          images: furman9596/github_env
-      - name: See tags and labels
-        run: |
-          echo "version: ${{ steps.meta.outputs.version }}"
-          echo "---------------"
-          echo "tags: ${{ steps.meta.outputs.tags }}"
-          echo "---------------"
-          echo "labels: ${{ steps.meta.outputs.labels }}"
-          echo "---------------"
-          echo "json: ${{ steps.meta.outputs.json }}"
-          echo "---------------"
-          cat ${{ steps.meta.outputs.bake-file }}
+          push: true
+          tags: furman9596/github_env:qa-latest
   deploy-qa:
     if: contains(github.ref,'qa')
     runs-on: ubuntu-latest
