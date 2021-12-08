@@ -1,29 +1,12 @@
-name: Deploy github_env app
-
+name: Deploy github_env to prod
 on:
   push:
-    branches:
-      - main
+    tags:
+      - *
 
 jobs:
-  deploy-demo:
-   runs-on: ubuntu-latest
-   environment: demo
-   steps:
-     - name: Deploy to demo ECS
-       run: |
-         echo "Running docker container to deploy to ECS demo..."
-         sleep 3
-         echo "Deployed demo!!"
-  deploy-prod:
+  tag-image:
     runs-on: ubuntu-latest
-    environment: prod
-    needs: [deploy-demo]
     steps:
-      - name: Deploy to prod ECS
-        run: |
-          echo "Running docker container to deploy to ECS prod..."
-          sleep 3
-          echo "Deployed prod"
-
-
+      - name: Echo github ref
+        run: echo ${{ github.ref }}

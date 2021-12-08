@@ -5,8 +5,6 @@ on:
   push:
     branches:
       - qa
-    tags:
-      - '*'
 
 jobs:
   build-and-publish:
