@@ -11,22 +11,29 @@ on:
 jobs:
   build-and-publish:
     runs-on: ubuntu-latest
-    if: contains(github.ref, 'qa')
     steps:
       - name: Log in to Docker Hub
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-      - name: Build image
+      - name: Build and push image
         uses: docker/build-push-action@v2
         with:
           push: true
           tags: furman9596/github_env:qa-latest
-  deploy-qa:
-    if: contains(github.ref,'qa')
+      - name: Save tag to file
+        run: echo "$(git rev-parse --short HEAD)" > image-tag.txt
+      - name: Cat image-tag.txt
+        run: cat ./image-tag.txt
+      - name: Cache qa tag
+        uses: actions/cach@v2
+        with:
+          key: image-tag
+          path: |
+            ./image-tag.txt
+  deploy:
     runs-on: ubuntu-latest
-    environment: qa
     needs: [ build-and-publish ]
     steps:
      - name: Checkout repository
