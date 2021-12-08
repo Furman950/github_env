@@ -19,8 +19,8 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
       - name: Build and push image
         run: |
-          docker build -t furman9596/github_env -t furman9596/$(git rev-parse --short HEAD) .
-          docker push furman9596/github_env furman9596/$(git rev-parse --short HEAD)
+          docker build -t furman9596/github_env -t "furman9596/$(git rev-parse --short HEAD)" .
+          docker push --all-tags furman9596/github_env
   deploy:
     runs-on: ubuntu-latest
     needs: [ build-and-publish ]
