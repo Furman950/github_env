@@ -2,7 +2,7 @@ name: Deploy github_env to prod
 on:
   push:
     tags:
-      - *
+      - "*"
 
 jobs:
   tag-image:
