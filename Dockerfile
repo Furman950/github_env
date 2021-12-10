@@ -4,7 +4,7 @@ WORKDIR /src/app
 COPY main.py main.py
 
 ARG GIT_SHA
-ARG BUILD_AT
+ARG BUILT_AT
 
 ENV GIT_SHA=${GIT_SHA} BUILT_AT=${BUILT_AT}
 
