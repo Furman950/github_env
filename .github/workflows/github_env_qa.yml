@@ -24,12 +24,6 @@ jobs:
         run: |
           echo "GIT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
           echo "BUILT_AT=$(date)" >> $GITHUB_ENV
-          echo "BUILT_AT=$(date)"
-          echo $(date)
-      - name: Print env
-        run: |
-          echo ${{ env.BUILT_AT }}
-          echo ${{ env.GIT_SHA }}
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
@@ -39,22 +33,14 @@ jobs:
           build-args: |
             GIT_SHA=${{ env.GIT_SHA }}
             BUILT_AT=${{ env.BUILT_AT }}
-#      - name: Build and push image
-#        run: |
-#          docker build -t furman9596/github_env -t "furman9596/github_env:$(git rev-parse --short HEAD)" .
-#          docker push --all-tags furman9596/github_env
-#  deploy:
-#    runs-on: ubuntu-latest
-#    needs: [ build-and-publish ]
-#    steps:
-#     - name: Checkout repository
-#       uses: actions/checkout@v2
-#     - name: Deploy to qa ECS
-#       uses: ./.github/actions/deploy-to-ecs
-#       with:
-#         cluster: qa
-#         version: v1.2.3
-#         aws-access-key: ${{ secrets.TEST_KEY }}
-#         aws-secret-access-key: ${{ secrets.TEST_SECRET_ACCESS_KEY }}
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
+      # Temp fix
+      # https://github.com/docker/build-push-action/issues/252
+      # https://github.com/moby/buildkit/issues/1896
+      - name: Move cache
+        run: |
+          rm -rf /tmp/.buildx-cache
+          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
 
 
