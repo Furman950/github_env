@@ -24,6 +24,9 @@ jobs:
         run: |
           echo "GIT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
           echo "BUILT_AT=$(date)" >> $GITHUB_ENV
+      - name: Docker images
+        run: |
+          docker images
       - name: Build image
         uses: docker/build-push-action@v2
         with:
@@ -47,6 +50,7 @@ jobs:
           args: --cache-dir /var/lib/trivy --light --exit-code 1 --no-progress --ignore-unfixed --clear-cache furman9596/github_env:scanned
       - name: Push images
         run: |
+          docker images
           docker push furman9596/github_env:scanned
 
 
