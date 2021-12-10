@@ -24,12 +24,11 @@ jobs:
         run: |
           echo "GIT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
           echo "BUILT_AT=$(date)" >> $GITHUB_ENV
-      - name: Build and push
+      - name: Build image
         uses: docker/build-push-action@v2
         with:
-          push: true
           tags: |
-            furman9596/github_env:latest
+            furman9596/github_env:scanned
           build-args: |
             GIT_SHA=${{ env.GIT_SHA }}
             BUILT_AT=${{ env.BUILT_AT }}
@@ -42,5 +41,13 @@ jobs:
         run: |
           rm -rf /tmp/.buildx-cache
           mv /tmp/.buildx-cache-new /tmp/.buildx-cache
+      - name: Scan image for security vulnerabilities
+        uses: docker://docker.io/aquasec/trivy:0.2.1
+        with:
+          args: --cache-dir /var/lib/trivy --light --exit-code 1 --no-progress --ignore-unfixed --clear-cache furman9596/github_env:scanned
+      - name: Push images
+        run: |
+          docker push furman9596/github_env:scanned
+
 
 
