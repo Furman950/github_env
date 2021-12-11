@@ -17,7 +17,7 @@ jobs:
          echo "Deployed demo!!"
   deploy-prod:
     runs-on: ubuntu-latest
-    environment: prod
+#    environment: prod
     needs: [deploy-demo]
     steps:
       - name: Deploy to prod ECS
