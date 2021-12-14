@@ -13,3 +13,4 @@ jobs:
       - uses: actions/checkout@v2
       - name: run stuff
         uses: ./.github/actions/test
+        with: v1.0.0
