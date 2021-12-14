@@ -14,5 +14,5 @@ jobs:
       - name: run stuff
         uses: ./.github/actions/wait
         with:
-          ur: example.com
-          git-sha: 12312
+          url: example.com
+          version-tag: v1.2.3
