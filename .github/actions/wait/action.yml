@@ -29,13 +29,15 @@ runs:
         if [ ! -z ${{ inputs.git-sha }} ]; then
           echo "Checking git-sha"
           FIELD=${{ inputs.git-sha-field-name }}
+          VALUE=${{ inputs.git-sha }}
         elif [ ! -z ${{ inputs.version-tag }} ]; then
           echo "Checking version tag"
           FIELD=${{ inputs.version-tag-field-name }}
+          VALUE=${{ inputs.version-tag }}
         else
           echo "Did not set git-sha or version-tag!"
           exit 1
         fi
 
-        echo "Waiting for $FIELD to be running in $METADATA_URL"
+        echo "Waiting for $VALUE ($FIELD) be running in $METADATA_URL"
       shell: bash
