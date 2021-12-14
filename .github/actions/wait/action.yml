@@ -1,0 +1,41 @@
+name: Wait for new cloud_api to be running
+description: Wait for new cloud_api to be running
+inputs:
+  url:
+    description: cloud_api url
+    required: true
+  git-sha:
+    description: Git sha to check for
+    required: false
+  git-sha-field-name:
+    description: Field name in JSON response from /v4/metadata/
+    required: false
+    default: 'git_sha'
+  version-tag:
+    description: Version tag to check for
+    required: false
+  version-tag-field-name:
+    description: Field name in JSON response from /v4/metadata/
+    required: false
+    default: 'version_tag'
+runs:
+  using: composite
+  steps:
+    - run: |
+        METADATA_URL=${{ inputs.url }}/v4/metadata/
+        CHECK_INTERVAL=${CHECK_INTERVAL:-10}
+        MAX_ATTEMPTS=${MAX_ATTEMPTS:-90}
+
+        if [ ! -z ${{ inputs.git-sha }} ]; then
+          echo "Checking git-sha"
+          FIELD=${{ inputs.git-sha-field-name }}
+        elif [ ! -z ${{ inputs.version-tag }} ]; then
+          echo "Checking version tag"
+          FIELD=${{ inputs.version-tag-field-name }}
+        else
+          echo "Did not set git-sha or version-tag!"
+          exit 1
+        fi
+
+        echo "Waiting for $FIELD to be running in $METADATA_URL"
+      shell: bash
