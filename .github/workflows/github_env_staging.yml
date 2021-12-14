@@ -25,5 +25,3 @@ jobs:
           echo "Running docker container to deploy to ECS prod..."
           sleep 3
           echo "Deployed prod"
-
-

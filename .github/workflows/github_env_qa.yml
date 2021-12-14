@@ -10,10 +10,6 @@ jobs:
   build-and-publish:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - name: run stuff
-        run: |
-          pip || echo "Pip not install"
-          mysql || echo "mysql not installed"
-          redis || echo "redis not installed"
-
-
+        uses: ./.github/test
