@@ -9,7 +9,7 @@ runs:
   using: composite
   steps:
     - name: Tag with version
-      if: startsWith(${{ inputs.version-tag }}, 'v')
+      if: startsWith('fda', 'v')
       run: |
         echo "The version-tag: ${{ inputs.version-tag }}"
 #        docker tag ${{ inputs.image }}:${{ inputs.tag-to-pull }} ${{ inputs.image }}:${{ inputs.version-tag }}
