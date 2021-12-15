@@ -10,9 +10,17 @@ jobs:
   build-and-publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: run stuff
-        uses: ./.github/actions/wait
-        with:
-          url: example.com
-          version-tag: v1.2.3
+      - name: Generate UUID
+        id: generate-uuid
+        run: |
+          echo "::set-output name=uuid::$(uuidgen)"
+      - name: Get output
+        run: |
+          echo "bruh ${{ steps.generate-uuid.uuid }}"
+#      - uses: actions/cache@v2
+#        with:
+#          path: build_uuid.txt
+#          key: ${{ runner.os }}-build-uuid-${{ hashFiles('build_uuid.txt') }}
+#      - name: generate uuid
+#        run: |
+#          uuidgen > build_uuid.txt
