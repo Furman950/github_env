@@ -17,10 +17,6 @@ jobs:
       - name: Get output
         run: |
           echo "bruh ${{ steps.generate-build-uuid.outputs.uuid }}"
-#      - uses: actions/cache@v2
-#        with:
-#          path: build_uuid.txt
-#          key: ${{ runner.os }}-build-uuid-${{ hashFiles('build_uuid.txt') }}
-#      - name: generate uuid
-#        run: |
-#          uuidgen > build_uuid.txt
+      - name: Adding an extra step
+        run: |
+          echo "Run extra step"
