@@ -11,12 +11,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Generate UUID
-        id: generate-uuid
+        id: generate-build-uuid
         run: |
           echo "::set-output name=uuid::$(uuidgen)"
       - name: Get output
         run: |
-          echo "bruh ${{ steps.generate-uuid.uuid }}"
+          echo "bruh ${{ steps.generate-build-uuid.outputs.uuid }}"
 #      - uses: actions/cache@v2
 #        with:
 #          path: build_uuid.txt
