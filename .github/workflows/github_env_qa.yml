@@ -22,3 +22,5 @@ jobs:
           echo "Run extra step"
       - name: Adding another step
         run: echo "Adding another step"
+      - name: Adding yet another step
+        run: echo "Adding yet another step"
