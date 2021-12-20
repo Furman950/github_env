@@ -34,7 +34,9 @@ jobs:
     needs: get-envs
     runs-on: ubuntu-latest
     strategy:
-      matrix: ${{ fromJSON(needs.get-environments.outputs.matrix) }}
+      matrix:
+        environment: ["prod", "demo"]
+#      matrix: ${{ fromJSON(needs.get-environments.outputs.matrix) }}
     steps:
       - run: |
           echo "${{ needs.get-environments.outputs.matrix }}"
