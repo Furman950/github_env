@@ -3,7 +3,7 @@ name: Deploy github_env app
 on:
   push:
     branches:
-      - main
+      - mainbruh
 
 jobs:
   deploy-demo:

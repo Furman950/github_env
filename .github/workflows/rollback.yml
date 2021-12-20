@@ -31,12 +31,12 @@ jobs:
       - run: |
           echo "${{ github.event.inputs.version-tag }}"
   deploy:
-    needs: get-envs
+    needs: get-environments
     runs-on: ubuntu-latest
     strategy:
-      matrix:
-        environment: ["prod", "demo"]
-#      matrix: ${{ fromJSON(needs.get-environments.outputs.matrix) }}
+#      matrix:
+#        environment: ["prod", "demo"]
+      matrix: ${{ fromJSON(needs.get-environments.outputs.matrix) }}
     steps:
       - run: |
           echo "${{ needs.get-environments.outputs.matrix }}"
