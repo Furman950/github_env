@@ -12,7 +12,7 @@ jobs:
   get-envs:
     runs-on: ubuntu-latest
     outputs:
-      matrix: ${{ steps.get-envs.outputs.matrix
+      matrix: ${{ steps.get-envs.outputs.matrix }}
     steps:
       - name: Check if valid environment
         id: get-environments
