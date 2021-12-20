@@ -5,9 +5,40 @@ on:
       version-tag:
         description: Version to deploy
         required: true
+     environment:
+       description: Environment to deploy to(Note prod will deploy to demo)
+       required: true
 jobs:
-  rollback-github-env:
+  get-envs:
     runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.get-envs.outputs.matrix
     steps:
+      - name: Check if valid environment
+        id: get-environments
+        run: |
+          environment=("${{ github.event.inputs.environment }}")
+          if ! [[ "environment" == "prod" || "environment" == "staging" || "environment" == "qa" ]]; then
+            echo "$env is an invalid environment!"
+            exit 1
+          fi
+
+          environments=("$environment")
+
+          if [[ "environment" == "prod" ]]; then
+            environments+=("demo")
+          fi
+
+          environments=$(IFS=, ; echo "${environments[*]}")
+
+          echo "::set-output name=matrix::{\"environment\":[$environments]}"
       - run: |
           echo "${{ github.event.inputs.version-tag }}"
+  deploy:
+    needs: get-envs
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: ${{ fromJSON(needs.get-environments.outputs.matrix) }}
+    steps:
+      - run: |
+          echo "${{ matrix.environment }}"
