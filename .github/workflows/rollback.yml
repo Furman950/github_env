@@ -23,15 +23,11 @@ jobs:
             exit 1
           fi
 
-          environments=("$environment")
-
           if [[ "environment" == "prod" ]]; then
-            environments+=("demo")
+            echo "::set-output name=matrix::{\"environment\":[\"prod\",\"demo\"]}"
+          else
+            echo "::set-output name=matrix::{\"environment\":["\"$environment\""]}"
           fi
-
-          environments=$(IFS=, ; echo "${environments[*]}")
-
-          echo "::set-output name=matrix::{\"environment\":[$environments]}"
       - run: |
           echo "${{ github.event.inputs.version-tag }}"
   deploy:
@@ -41,4 +37,5 @@ jobs:
       matrix: ${{ fromJSON(needs.get-environments.outputs.matrix) }}
     steps:
       - run: |
+          echo "${{ needs.get-environments.outputs.matrix }}"
           echo "${{ matrix.environment }}"
