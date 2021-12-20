@@ -8,6 +8,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: |
+          git config --local user.email "ferminsandoval950@hotmail.com"
+          git config --local user.name "furman950"
           git commit --allow-empty -m "Merging hotfix into main from '${{ github.ref_name }}'"
       - uses: actions/checkout@v2
         with:
