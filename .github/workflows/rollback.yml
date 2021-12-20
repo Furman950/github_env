@@ -23,7 +23,7 @@ jobs:
             exit 1
           fi
 
-          if [[ "environment" == "prod" ]]; then
+          if [[ "$environment" == "prod" ]]; then
             echo "::set-output name=matrix::{\"environment\":[\"prod\",\"demo\"]}"
           else
             echo "::set-output name=matrix::{\"environment\":["\"$environment\""]}"
@@ -33,10 +33,10 @@ jobs:
   deploy:
     needs: get-environments
     runs-on: ubuntu-latest
-#    strategy:
+    strategy:
 #      matrix:
 #        environment: ["prod", "demo"]
-#      matrix: ${{ fromJSON(needs.get-environments.outputs.matrix) }}
+      matrix: ${{ fromJSON(needs.get-environments.outputs.matrix) }}
     steps:
       - run: |
           echo "${{ needs.get-environments.outputs.matrix }}"
