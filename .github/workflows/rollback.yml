@@ -18,8 +18,8 @@ jobs:
         id: get-environments
         run: |
           environment=("${{ github.event.inputs.environment }}")
-          if ! [[ "environment" == "prod" || "environment" == "staging" || "environment" == "qa" ]]; then
-            echo "$env is an invalid environment!"
+          if ! [[ "$environment" == "prod" || "$environment" == "staging" || "$environment" == "qa" ]]; then
+            echo "$environment is an invalid environment!"
             exit 1
           fi
 
