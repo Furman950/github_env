@@ -7,13 +7,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: |
-          git commit --allow-empty -m "Merging hotfix into main from '${{ github.ref_name }}'"
-      - uses: actions/checkout@v2
         with:
-          ref: main
+          fetch-depth: 0
       - run: |
-          echo "ref_name: ${{ github.ref_name }}"
+          git status
+          git config --local user.email "ferminsandoval950@hotmail.com"
+          git config --local user.name "furman950"
+          git commit --allow-empty -m "Merging hotfix into main from '${{ github.ref_name }}'"
           git checkout main
           git merge ${{ github.ref_name }}
           git push
