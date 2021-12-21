@@ -14,6 +14,7 @@ jobs:
         id: generate-version
         with:
           tag_prefix: v
+          bump_each_commit: false
       - run: |
           echo "major ${{ steps.generate-version.outputs.major }}"
           echo "minor ${{ steps.generate-version.outputs.minor }}"
