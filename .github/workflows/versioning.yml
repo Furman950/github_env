@@ -12,6 +12,8 @@ jobs:
           fetch-depth: 0
       - uses: paulhatch/semantic-version@v4.0.2
         id: generate-version
+        with:
+          change_path: ./
       - run: |
           echo "major ${{ steps.generate-version.outputs.major }}"
           echo "minor ${{ steps.generate-version.outputs.minor }}"
