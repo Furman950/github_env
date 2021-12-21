@@ -13,7 +13,7 @@ jobs:
       - uses: paulhatch/semantic-version@v4.0.2
         id: generate-version
         with:
-          change_path: ./
+          change_path: main.py
       - run: |
           echo "major ${{ steps.generate-version.outputs.major }}"
           echo "minor ${{ steps.generate-version.outputs.minor }}"
