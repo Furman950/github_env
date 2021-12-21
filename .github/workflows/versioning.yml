@@ -15,5 +15,5 @@ jobs:
         id: generate-version
       - run: |
           echo "Version ${{ steps.generate-version.outputs.version }}"
-          git tag steps.generate-version.outputs.version
+          git tag ${{ steps.generate-version.outputs.version }}
           git push --tags
