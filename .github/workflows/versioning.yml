@@ -1,0 +1,19 @@
+name: Exploring versioning
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  get-version:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - uses: paulhatch/semantic-version@4.0.2
+        id: generate-version
+        with:
+          namespace: ${ github.ref_name }}
+      - run: |
+          echo "Version ${{ steps.generate-version.outputs.version }}"
