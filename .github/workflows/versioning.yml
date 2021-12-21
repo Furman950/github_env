@@ -12,8 +12,6 @@ jobs:
           fetch-depth: 0
       - uses: paulhatch/semantic-version@v4.0.2
         id: generate-version
-        with:
-          change_path: main.py
       - run: |
           echo "major ${{ steps.generate-version.outputs.major }}"
           echo "minor ${{ steps.generate-version.outputs.minor }}"
@@ -22,5 +20,5 @@ jobs:
           echo "version ${{ steps.generate-version.outputs.version }}"
           echo "version_tag ${{ steps.generate-version.outputs.version_tag }}"
           echo "changed ${{ steps.generate-version.outputs.changed }}"
-#          git tag ${{ steps.generate-version.outputs.version }}
-#          git push --tags
+          git tag "${{ steps.generate-version.outputs.version }}+${{ steps.generate-version.outputs.increment }}"
+          git push --tags
