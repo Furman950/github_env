@@ -22,5 +22,5 @@ jobs:
           echo "version ${{ steps.generate-version.outputs.version }}"
           echo "version_tag ${{ steps.generate-version.outputs.version_tag }}"
           echo "changed ${{ steps.generate-version.outputs.changed }}"
-          git tag "${{ steps.generate-version.outputs.version_tag }}+${{ steps.generate-version.outputs.increment }}"
+          git tag -f "${{ steps.generate-version.outputs.version_tag }}+${{ steps.generate-version.outputs.increment }}"
           git push --tags
