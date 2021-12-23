@@ -40,7 +40,7 @@ runs:
         is_number ${version_parts[1]} "minor"
         is_number ${version_parts[2]} "patch"
         
-        case "$1" in
+        case "${{ inputs.type }}" in
         "major")
           echo "Incrementing 'major' version"
           index=0
