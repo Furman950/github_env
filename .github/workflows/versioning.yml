@@ -16,6 +16,9 @@ jobs:
         with:
           fetch-depth: 0
       - uses: ./.github/actions/increment-semantic-version
+        id: semantic-version
         with:
           version: ${{ github.event.inputs.version }}
           type: ${{ github.event.inputs.type }}
+      - run: |
+          echo "${{ steps.semantic-version.outputs.new-version }}"
