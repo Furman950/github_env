@@ -17,5 +17,5 @@ jobs:
           fetch-depth: 0
       - uses: ./.github/actions/increment-semantic-version
         with:
-          version: v1.2.3
-          type: minor
+          version: ${{ github.event.inputs.version }}
+          type: ${{ github.event.inputs.type }}
