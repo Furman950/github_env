@@ -1,27 +1,21 @@
 name: Exploring versioning
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Version to increment
+        required: true
+      type:
+        description: Version type to increment(major, minor, patch)
+        required: true
 jobs:
-  get-version:
+  increment-version:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - uses: paulhatch/semantic-version@v4.0.2
-        id: generate-version
+      - uses: ./.github/actions/increment-semantic-version
         with:
-          tag_prefix: v
-          bump_each_commit: false
-      - run: |
-          echo "major ${{ steps.generate-version.outputs.major }}"
-          echo "minor ${{ steps.generate-version.outputs.minor }}"
-          echo "patch ${{ steps.generate-version.outputs.patch }}"
-          echo "increment ${{ steps.generate-version.outputs.increment }}"
-          echo "version ${{ steps.generate-version.outputs.version }}"
-          echo "version_tag ${{ steps.generate-version.outputs.version_tag }}"
-          echo "changed ${{ steps.generate-version.outputs.changed }}"
-          git tag -f "${{ steps.generate-version.outputs.version_tag }}+${{ steps.generate-version.outputs.increment }}"
-          git push --tags
+          version: v1.2.3
+          type: minor
