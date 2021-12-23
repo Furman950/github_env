@@ -18,7 +18,7 @@ runs:
     - id: increment-version
       run: |
         version=${{ inputs.version }}
-        number_regex="^[1-9][0-9]"
+        number_regex="^[1-9][0-9]*$"
         raw_version=$([[ $version == v* ]] && echo ${version:1} || $version)
         
         function is_number {
