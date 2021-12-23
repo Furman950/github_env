@@ -22,7 +22,7 @@ runs:
         raw_version=$([[ $version == v* ]] && echo ${version:1} || $version)
         
         function is_number {
-          if ! [[ $1 =~ number_regex ]]; then
+          if ! [[ $1 =~ $number_regex ]]; then
             echo "'$1' is not a valid for '$2' version. Expected a non-negative number(Also a number with a leading 0 is not valid)"
             exho "exiting"; exit 1
           fi
