@@ -63,7 +63,7 @@ runs:
         esac
         
         version_parts[$index]=$((${version_parts[$index]} + 1))
-        new_version="${version_parts[0]}.${version_parts[1]}.${version_parts[2]}"
+        new_version="v${version_parts[0]}.${version_parts[1]}.${version_parts[2]}"
         
         echo "New version is: $new_version"
         echo "::set-output name=new-version::$(echo $new_version)"
