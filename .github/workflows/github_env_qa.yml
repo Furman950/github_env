@@ -7,20 +7,12 @@ on:
       - qa
 
 jobs:
-  build-and-publish:
+  tag-version:
     runs-on: ubuntu-latest
     steps:
-      - name: Generate UUID
-        id: generate-build-uuid
-        run: |
-          echo "::set-output name=uuid::$(uuidgen)"
-      - name: Get output
-        run: |
-          echo "bruh ${{ steps.generate-build-uuid.outputs.uuid }}"
-      - name: Adding an extra step
-        run: |
-          echo "Run extra step"
-      - name: Adding another step
-        run: echo "Adding another step"
-      - name: Adding yet another step
-        run: echo "Adding yet another step"
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - run: |
+          git tag $(git describe --tags)
+          git push --tags
