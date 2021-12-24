@@ -13,6 +13,7 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
+        #adding -f flag so we can re-run build without a
       - run: |
-          git tag $(git describe --tags)
+          git tag -f $(git describe --tags)-qa
           git push --tags
