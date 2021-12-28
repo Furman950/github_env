@@ -16,8 +16,5 @@ jobs:
       - id: generate-tag
         uses: ./.github/actions/generate-tag
       - run: |
-          echo "tag generated: ${{ steps.generate-tag.outputs.tag }}"
-#      - run: |
-#          tag=$(git tag --sort=committerdate | tail -1)-$(git rev-parse --short HEAD)-qa
-#          git tag -f $tag
-#          git push --tags
+          git tag -f ${{ steps.generate-tag.outputs.tag }}
+          git push --tags
