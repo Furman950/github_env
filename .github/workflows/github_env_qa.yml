@@ -13,7 +13,11 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
+      - id: generate-tag
+        uses: ./.github/actions/generate-tag
       - run: |
-          tag=$(git tag --sort=committerdate | tail -1)-$(git rev-parse --short HEAD)-qa
-          git tag -f $tag
-          git push --tags
+          echo "tag generated: ${{ steps.generate-tag.outputs.tag }}"
+#      - run: |
+#          tag=$(git tag --sort=committerdate | tail -1)-$(git rev-parse --short HEAD)-qa
+#          git tag -f $tag
+#          git push --tags
