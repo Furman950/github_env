@@ -14,6 +14,6 @@ jobs:
         with:
           fetch-depth: 0
       - run: |
-          tag=$(git tag --sort=committerdate | tail -1)-$(git rev-parse --short HEAD)-qa)
+          tag=$(git tag --sort=committerdate | tail -1)-$(git rev-parse --short HEAD)-qa
           git tag -f $tag
           git push --tags
