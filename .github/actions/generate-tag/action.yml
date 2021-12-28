@@ -8,11 +8,12 @@ inputs:
 outputs:
   tag:
     description: Tag generated
-    value: ${{ steps.
+    value: ${{ steps.generate-tag.outputs.tag
 runs:
   using: composite
   steps:
     - name: Generate tag
+      id: generate-tag
       run: |
         echo "Generating tag for ${{ inputs. environment }}"
         tag=$(git tag --sort=committerdate | tail -1)-$(git rev-parse --short HEAD)
