@@ -12,7 +12,7 @@ outputs:
 runs:
   using: composite
   steps:
-    - name: Generate tag for ${{ inputs.environment }}
+    - name: Generate tag
       run: |
         echo "Generating tag for ${{ inputs. environment }}"
         tag=$(git tag --sort=committerdate | tail -1)-$(git rev-parse --short HEAD)
