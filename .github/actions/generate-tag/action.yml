@@ -8,7 +8,7 @@ inputs:
 outputs:
   tag:
     description: Tag generated
-    value: ${{ steps.generate-tag.outputs.tag
+    value: ${{ steps.generate-tag.outputs.tag }}
 runs:
   using: composite
   steps:
