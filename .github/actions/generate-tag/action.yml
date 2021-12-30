@@ -16,6 +16,6 @@ runs:
       id: generate-tag
       run: |
         echo "Generating tag for ${{ inputs.environment }}"
-        tag=$(git tag --sort=committerdate | tail -1)-$(git rev-parse --short HEAD)-${{ inputs.environment }}
+        tag=$(git describe --tags)-$(git rev-parse --short HEAD)-${{ inputs.environment }}
         echo "::set-output name=tag::$tag"
       shell: bash
