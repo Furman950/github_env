@@ -13,9 +13,9 @@ jobs:
       - uses: actions/checkout@v2
         with:
           ref: main
+      - run: git fetch --depth=1 origin +refs/tags/*:refs/tags/*
       - id: get-tag
         run: |
-          git fetch --prune --unshallow --tags
           git tag --sort=-v:refname | sed 10q
           echo "-----------------"
           echo "current-prod-tag $(git tag --sort=-v:refname | sed 1q)"
