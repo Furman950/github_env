@@ -12,20 +12,16 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          ref: main
           fetch-depth: 0
+          ref: main
       - id: get-tag
         run: |
           which sed
-          echo "$(git tag --sort=-v:refname | sed 10q)"
+          git log
+          git tag --sort=-v:refname | sed 10q
           echo "-----------------"
           echo "current-prod-tag $(git tag --sort=-v:refname | sed 1q)"
           echo "-----------------"
           git tag
           echo "::set-output name=current-prod-tag::$(git tag --sort=-v:refname | sed 1q)"
-      - id: increment-tag-version
-        uses: ./.github/actions/increment-semantic-version
-        with:
-          tag-to-increment: ${{ steps.get-tag.outputs.current-prod-tag }}
-      - run: |
-          echo "new tag: ${{ steps.increment-tag-version.outputs.new-tag }}"
+
