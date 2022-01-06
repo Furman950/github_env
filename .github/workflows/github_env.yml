@@ -20,11 +20,9 @@ jobs:
           echo "current-prod-tag $(git tag --sort=-v:refname | sed 1q)"
           echo "-----------------"
           echo "::set-output name=current-prod-tag::$(git tag --sort=-v:refname | sed 1q)"
-          echo "::set-output name=staging-tag::$(make version-tag)"
       - id: increment-tag-version
         uses: ./.github/actions/increment-semantic-version
         with:
           tag-to-increment: ${{ steps.get-tag.outputs.current-prod-tag }}
       - run: |
           echo "new tag: ${{ steps.increment-tag-version.outputs.new-tag }}"
-          echo "staging tag: ${{ steps.get-tag.outputs.staging-tag }}"
