@@ -3,7 +3,7 @@ name: Deploy github_env app
 on:
   push:
     branches:
-      - main
+      - mainmain
 jobs:
   tag-version:
     runs-on: ubuntu-latest

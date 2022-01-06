@@ -16,12 +16,10 @@ jobs:
           ref: main
       - id: get-tag
         run: |
-          which sed
-          git log
+          git fetch --prune --unshallow --tags
           git tag --sort=-v:refname | sed 10q
           echo "-----------------"
           echo "current-prod-tag $(git tag --sort=-v:refname | sed 1q)"
           echo "-----------------"
-          git tag
           echo "::set-output name=current-prod-tag::$(git tag --sort=-v:refname | sed 1q)"
 
