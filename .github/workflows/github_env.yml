@@ -15,10 +15,12 @@ jobs:
           ref: main
       - id: get-tag
         run: |
+          which sed
           echo "$(git tag --sort=-v:refname | sed 10q)"
           echo "-----------------"
           echo "current-prod-tag $(git tag --sort=-v:refname | sed 1q)"
           echo "-----------------"
+          git tag
           echo "::set-output name=current-prod-tag::$(git tag --sort=-v:refname | sed 1q)"
       - id: increment-tag-version
         uses: ./.github/actions/increment-semantic-version
