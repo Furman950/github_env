@@ -1,12 +1,30 @@
 name: Deploy github_env to prod
 on:
-  push:
-    tags:
-      - "*"
+  workflow_dispatch:
+    inputs:
+      type:
+        description: Version type to increment(major, minor, patch)
+        required: false
 
 jobs:
   tag-image:
     runs-on: ubuntu-latest
     steps:
-      - name: Echo github ref
-        run: echo ${{ github.ref }}
+      - uses: actions/checkout@v2
+        with:
+          ref: main
+      - id: get-tag
+        run: |
+          echo "$(git tag --sort=-v:refname | sed 10q)"
+          echo "-----------------"
+          echo "current-prod-tag $(git tag --sort=-v:refname | sed 1q)"
+          echo "-----------------"
+          echo "::set-output name=current-prod-tag::$(git tag --sort=-v:refname | sed 1q)"
+          echo "::set-output name=staging-tag::$(make version-tag)"
+      - id: increment-tag-version
+        uses: ./.github/actions/increment-semantic-version
+        with:
+          tag-to-increment: ${{ steps.get-tag.outputs.current-prod-tag }}
+      - run: |
+          echo "new tag: ${{ steps.increment-tag-version.outputs.new-tag }}"
+          echo "staging tag: ${{ steps.get-tag.outputs.staging-tag }}"
