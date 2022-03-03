@@ -1,11 +1,9 @@
 name: Deploy github_env app
-# https://dille.name/blog/2018/09/20/how-to-tag-docker-images-without-pulling-them/
 
 on:
   push:
     branches:
-      - qaa
-
+      - mainmain
 jobs:
   tag-version:
     runs-on: ubuntu-latest
@@ -13,8 +11,6 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - id: generate-tag
-        uses: ./.github/actions/generate-tag
       - run: |
-          git tag -f ${{ steps.generate-tag.outputs.tag }}
+          git tag -f $(git describe --tags)-staging
           git push --tags

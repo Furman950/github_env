@@ -1,0 +1,16 @@
+name: Tag image
+inputs:
+  version-tag:
+    description: Version of cloud api
+    required: false
+    default: ''
+description: Pull down cloudapi and tag it with new-tag, optionally specify specific tag you want to pull down and retag
+runs:
+  using: composite
+  steps:
+    - name: Tag with version
+      if: startsWith(inputs.version-tag, 'v')
+      run: |
+        echo "The version-tag: ${{ inputs.version-tag }}"
+#        docker tag ${{ inputs.image }}:${{ inputs.tag-to-pull }} ${{ inputs.image }}:${{ inputs.version-tag }}
+      shell: bash

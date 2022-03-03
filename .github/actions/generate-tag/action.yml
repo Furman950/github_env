@@ -1,0 +1,21 @@
+name: Generate tag
+description: Generate tag based off environment
+inputs:
+  environment:
+    description: Environment
+    required: false
+    default: qa
+outputs:
+  tag:
+    description: Tag generated
+    value: ${{ steps.generate-tag.outputs.tag }}
+runs:
+  using: composite
+  steps:
+    - name: Generate tag
+      id: generate-tag
+      run: |
+        echo "Generating tag for ${{ inputs.environment }}"
+        tag=$(git describe --tags)-$(git rev-parse --short HEAD)-${{ inputs.environment }}
+        echo "::set-output name=tag::$tag"
+      shell: bash

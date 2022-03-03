@@ -1,0 +1,71 @@
+name: Increment semantic version
+description: Increment semantic version
+inputs:
+  version:
+    description: Version to increment
+    required: true
+  type:
+    description: Increment type(major, minor, patch)
+    required: true
+    default: patch
+outputs:
+  new-version:
+    description: new version
+    value: ${{ steps.increment-version.outputs.new-version }}
+runs:
+  using: composite
+  steps:
+    - id: increment-version
+      run: |
+        version=${{ inputs.version }}
+        number_regex="^[1-9][0-9]*$"
+        raw_version=$([[ $version == v* ]] && echo ${version:1} || $version)
+        
+        function is_number {
+          if ! [[ $1 =~ $number_regex ]]; then
+            echo "'$1' is not a valid for '$2' version. Expected a non-negative number(Also a number with a leading 0 is not valid)"
+            exho "exiting"; exit 1
+          fi
+        }
+        
+        IFS=". " read -r -a version_parts <<< $raw_version
+        
+        version_length=${#version_parts[@]}
+        if ! [[ $version_length == 3 ]]; then
+          echo "version '$version' has a length of '$version_length', expected it to be '3'. Is the version in X.Y.Z format?"
+          echo "exciting"; exit 1
+        fi
+        
+        is_number ${version_parts[0]} "major"
+        is_number ${version_parts[1]} "minor"
+        is_number ${version_parts[2]} "patch"
+        
+        case "${{ inputs.type }}" in
+        "major")
+          echo "Incrementing 'major' version"
+          index=0
+          version_parts[1]=0
+          version_parts[2]=0
+          ;;
+        "minor")
+          echo "Incrementing 'minor' version"
+          index=1
+          version_parts[2]=0
+          ;;
+        "patch")
+          echo "Incrementing 'patch' version"
+          index=2
+          ;;
+        *)
+          echo "Defaulting to incrementing 'patch' version"
+          index=2
+          ;;
+        esac
+        
+        version_parts[$index]=$((${version_parts[$index]} + 1))
+        new_version="v${version_parts[0]}.${version_parts[1]}.${version_parts[2]}"
+        
+        echo "New version is: $new_version"
+        echo "::set-output name=new-version::$(echo $new_version)"
+
+      shell: bash
