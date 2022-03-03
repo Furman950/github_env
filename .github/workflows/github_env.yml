@@ -1,4 +1,4 @@
-name: Deploy github_env app
+name: Test
 
 on:
   push:
@@ -6,24 +6,33 @@ on:
       - main
 
 jobs:
-  deploy-demo:
-   runs-on: ubuntu-latest
-   environment: demo
-   steps:
-     - name: Deploy to demo ECS
-       run: |
-         echo "Running docker container to deploy to ECS demo..."
-         sleep 3
-         echo "Deployed demo!!"
-  deploy-prod:
+  test:
     runs-on: ubuntu-latest
-    environment: prod
-    needs: [deploy-demo]
     steps:
-      - name: Deploy to prod ECS
+      - id: get-tag
         run: |
-          echo "Running docker container to deploy to ECS prod..."
-          sleep 3
-          echo "Deployed prod"
+          tag="the-tag"
+          tag_to_pull="tag-to-pull"
+          echo "::set-output name=tag::$tag"
+          echo "::set-output name=tag-to-pull::$tag_to_pull"
+      - run: |
+          echo "tag: ${{ steps.get-tag.outputs.tag }}"
+          echo "tag-to-pull: ${{ steps.get-tag.outputs.tag-to-pull }}"
+# name: Deploy github_env app
 
+# on:
+#   push:
+#     branches:
+#       - main
 
+# jobs:
+#   deploy-demo:
+#    runs-on: ubuntu-latest
+#    steps:
+  
+#       run: |
+#         tag="the-tag"
+#         tag_to_pull="tag-to-pull"
+#         echo "::set-output name=tag::$tag"
+#         echo "::set-output name=tag-to-pull::$tag_to_pull"
+    -
